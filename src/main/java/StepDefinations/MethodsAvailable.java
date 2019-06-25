@@ -1,0 +1,77 @@
+package StepDefinations;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import junit.framework.Assert;
+
+public class MethodsAvailable {
+	WebDriver driver;
+	
+	public void LaunchBrowser() {
+		System.setProperty("webdriver.gecko.driver", "utils\\geckodriver.exe");
+		driver = new FirefoxDriver();
+		 driver.manage().window().maximize();
+		 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		 }
+	 public void NavigateToURL() {	
+	    driver.get("https://developer.here.com/documentation");
+		 
+	 }
+	 public void NavigateToURLDeveloperAndVal() {
+		 String exp_str="object";
+		 driver.manage().window().maximize();
+	     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		    driver.get("https://developer.here.com");
+		    String str= (String) ((JavascriptExecutor)driver).executeScript("return typeof angular");
+	    if(str.equals(exp_str)){
+	    	System.out.println("Angular was initialised on the Page");
+	    }
+	    else{
+	    System.out.println("Angular was not initialised on the Page");	
+	    }
+	    }
+      public void countLink_And_Verify() {
+			 try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+		 List<WebElement> links = driver.findElements(By.tagName("a"));
+		 System.out.println("Total links are "+links.size()); 
+		 for(int i=0; i<links.size(); i++) {
+		 WebElement element = links.get(i);
+		 String url=element.getAttribute("href");
+		 		 verifyLink(url); 
+		 }
+		 } 
+		 public static void verifyLink(String urlLink) {
+		        try {
+		 URL link = new URL(urlLink);
+		 HttpURLConnection httpConn =(HttpURLConnection)link.openConnection();
+		 httpConn.setConnectTimeout(2000);
+		 httpConn.connect();
+		 if(httpConn.getResponseCode()== 200) { 
+		 System.out.println(urlLink+" - "+httpConn.getResponseMessage());
+		 }
+		 if(httpConn.getResponseCode()== 404) {
+		 System.out.println(urlLink+" - "+httpConn.getResponseMessage());
+		 }
+		 }
+		 catch (Exception e) {
+		 }
+		    
+		 
+		 
+		 }
+		 
+
+}
