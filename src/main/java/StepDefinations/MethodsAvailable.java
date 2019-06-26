@@ -16,7 +16,7 @@ import junit.framework.Assert;
 public class MethodsAvailable {
 	static WebDriver driver;
 	 static String exp_str="object";
-	
+	 static List<WebElement> links;
 	public void LaunchBrowser() {
 		System.setProperty("webdriver.gecko.driver", "utils\\geckodriver.exe");
 		driver = new FirefoxDriver();
@@ -46,10 +46,11 @@ public class MethodsAvailable {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-		 List<WebElement> links = driver.findElements(By.tagName("a"));
+		 links = driver.findElements(By.tagName("a"));
 		 System.out.println("Total links are "+links.size()); 
 		 for(int i=0; i<links.size(); i++) {
 		 WebElement element = links.get(i);
+		 
 		 String url=element.getAttribute("href");
 		 verifyLinkDeveloperPage(url); 
 		 }
@@ -62,7 +63,8 @@ public class MethodsAvailable {
 		 httpConn.connect();
 		 if(httpConn.getResponseCode()== 200) { 
 		 System.out.println(urlLink+" - "+httpConn.getResponseMessage());
-		    String str= (String) ((JavascriptExecutor)driver).executeScript("return typeof angular");
+		 driver.get(urlLink);
+		    String str= (String) ((JavascriptExecutor)driver).executeScript("return typeof angular");		    
 	    if(str.equals(exp_str)){
 	    	System.out.println("Angular was initialised on the Page");
 	    }
@@ -78,8 +80,8 @@ public class MethodsAvailable {
 		 catch (Exception e) {
 		 }
 		    
-		 
-		 
+		        driver.get("https://developer.here.com");
+		        links = driver.findElements(By.tagName("a"));
 		 }
 		 public void countLink_And_Verify() {
 			 try {
