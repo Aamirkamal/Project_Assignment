@@ -103,10 +103,8 @@ public class MethodsAvailable {
 		 HttpURLConnection httpConn =(HttpURLConnection)link.openConnection();
 		 httpConn.setConnectTimeout(2000);
 		 httpConn.connect();
-		 //
 		 if(httpConn.getResponseCode()== 200) { 
 		 System.out.println(urlLink+" - "+httpConn.getResponseMessage());
-		 driver.get(urlLink);
 		 }
 		 if(httpConn.getResponseCode()== 404) {
 		 System.out.println(urlLink+" - "+httpConn.getResponseMessage());
@@ -114,7 +112,6 @@ public class MethodsAvailable {
 		 }
 		 catch (Exception e) {
 		 }
-		        driver.get("https://developer.here.com/documentation");
-		        links = driver.findElements(By.tagName("a")); 
+		        
 		 }
 }
