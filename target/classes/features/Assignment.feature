@@ -12,4 +12,4 @@ Scenario: Here Documentation Page all internal links validation and verify Angul
 
 Given Launch the browser
 When Navigate to here documentation Page
-Then Count and validate the number of links present with Angular on Developer Page
+Then test will fail if it contains external link 
